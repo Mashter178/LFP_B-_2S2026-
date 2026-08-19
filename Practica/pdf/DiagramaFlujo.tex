@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric}
+
+\begin{document}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=2.1cm,
+    box/.style={draw, rounded corners, align=center, minimum width=3.2cm, minimum height=1.2cm, font=\small},
+    decision/.style={draw, diamond, aspect=2, align=center, minimum width=3.2cm, minimum height=1.5cm, font=\small},
+    arrow/.style={->, thick, >=Stealth}
+]
+
+\node[box] (inicio) {Inicio};
+\node[box, below=of=inicio] (menu) {Mostrar menú};
+\node[box, below=of=menu] (opcion) {Leer opción};
+\node[decision, below=of=opcion] (decision) {¿Opción?};
+
+\node[box, left=of=decision, xshift=-2.8cm] (cargarJ) {1. Cargar jugadores};
+\node[box, below=of=cargarJ] (cargarS) {2. Cargar sudokus};
+\node[box, below=of=cargarS] (cargarI) {3. Cargar intentos};
+\node[box, below=of=cargarI] (validar) {4. Validar intento};
+\node[box, below=of=validar] (rep1) {5. Reporte sudoku};
+\node[box, below=of=rep1] (rep2) {6. Reporte jugador};
+\node[box, below=of=rep2] (rep3) {7. Top 10};
+\node[box, right=of=decision, xshift=3.5cm] (salir) {8. Salir};
+
+\node[box, below=of=validar, xshift=5cm] (input) {Ingresar original y solución};
+\node[box, below=of=input] (calcular) {calificar\_intento};
+\node[box, below=of=calcular] (resultado) {Mostrar resultado};
+
+\node[box, below=of=rep1, xshift=5cm] (gen1) {Generar HTML};
+\node[box, below=of=rep2, xshift=5cm] (gen2) {Generar HTML};
+\node[box, below=of=rep3, xshift=5cm] (gen3) {Generar HTML};
+
+\draw[arrow] (inicio) -- (menu);
+\draw[arrow] (menu) -- (opcion);
+\draw[arrow] (opcion) -- (decision);
+
+\draw[arrow] (decision) -- node[above] {1} (cargarJ);
+\draw[arrow] (decision) -- node[above] {2} (cargarS);
+\draw[arrow] (decision) -- node[above] {3} (cargarI);
+\draw[arrow] (decision) -- node[above] {4} (validar);
+\draw[arrow] (decision) -- node[above] {5} (rep1);
+\draw[arrow] (decision) -- node[above] {6} (rep2);
+\draw[arrow] (decision) -- node[above] {7} (rep3);
+\draw[arrow] (decision) -- node[above] {8} (salir);
+
+\draw[arrow] (cargarJ) -- (menu);
+\draw[arrow] (cargarS) -- (menu);
+\draw[arrow] (cargarI) -- (menu);
+\draw[arrow] (rep1) -- (gen1);
+\draw[arrow] (gen1) -- (menu);
+\draw[arrow] (rep2) -- (gen2);
+\draw[arrow] (gen2) -- (menu);
+\draw[arrow] (rep3) -- (gen3);
+\draw[arrow] (gen3) -- (menu);
+
+\draw[arrow] (validar) -- (input);
+\draw[arrow] (input) -- (calcular);
+\draw[arrow] (calcular) -- (resultado);
+\draw[arrow] (resultado) -- (menu);
+
+\draw[arrow] (salir) -- ++(0,-1.5cm) node[below] {Fin};
+
+\end{tikzpicture}
+\caption{Diagrama de flujo del sistema Sudoku}
+\end{figure}
+
+\end{document}

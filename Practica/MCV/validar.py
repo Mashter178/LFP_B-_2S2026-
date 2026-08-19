@@ -54,19 +54,22 @@ def valida_tablero(matriz):
 
 
 def calificar_intento(cadena_original, cadena_solucion):
-    original = cadena_a_matriz(cadena_original)
-    propuesta = cadena_a_matriz(cadena_solucion)
+    try:
+        original = cadena_a_matriz(cadena_original)
+        propuesta = cadena_a_matriz(cadena_solucion)
 
-    pistas_ok = valida_pistas(original, propuesta)
-    porcentaje, filas_ok, columnas_ok, cajas_ok = valida_tablero(propuesta)
+        pistas_ok = valida_pistas(original, propuesta)
+        porcentaje, filas_ok, columnas_ok, cajas_ok = valida_tablero(propuesta)
 
-    resuelto = (porcentaje == 100) and pistas_ok
+        resuelto = (porcentaje == 100) and pistas_ok
 
-    return {
-        "porcentaje_validez": porcentaje,
-        "filas_validas": filas_ok,
-        "columnas_validas": columnas_ok,
-        "cajas_validas": cajas_ok,
-        "pistas_respetadas": pistas_ok,
-        "resuelto_correctamente": resuelto,
-    }
+        return {
+            "porcentaje_validez": porcentaje,
+            "filas_validas": filas_ok,
+            "columnas_validas": columnas_ok,
+            "cajas_validas": cajas_ok,
+            "pistas_respetadas": pistas_ok,
+            "resuelto_correctamente": resuelto,
+        }
+    except ValueError as e:
+        raise ValueError(f"Formato inválido del tablero: {e}")

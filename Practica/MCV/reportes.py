@@ -7,7 +7,7 @@ def archivo_reporte(nombre_archivo):
     return REPORT_DIR / nombre_archivo
 
 
-def reporte_sudoku(sudokus, intentos, ruta_salida="reporte_sudokus.html"):
+def reporte_sudoku(sudokus, intentos, ruta_salida="resumen_sudoku.html"):
     """Reporte 1: Resumen por Sudoku"""
     filas = []
 
@@ -66,10 +66,10 @@ def reporte_sudoku(sudokus, intentos, ruta_salida="reporte_sudokus.html"):
     with open(ruta_salida, "w", encoding="utf-8") as archivo:
         archivo.write(html)
 
-    return archivo_reporte("reporte_sudokus.html")
+    return archivo_reporte("resumen_sudoku.html")
 
 
-def reporte_jugador(jugadores, intentos, sudokus, ruta_salida="reporte_jugadores.html"):
+def reporte_jugador(jugadores, intentos, sudokus, ruta_salida="rendimiento_jugador.html"):
     """Reporte 2: Rendimiento por Jugador"""
     filas = []
 
@@ -132,10 +132,10 @@ def reporte_jugador(jugadores, intentos, sudokus, ruta_salida="reporte_jugadores
     with open(ruta_salida, "w", encoding="utf-8") as archivo:
         archivo.write(html)
 
-    return archivo_reporte("reporte_jugadores.html")
+    return archivo_reporte("rendimiento_jugador.html")
 
 
-def reporte_top10(intentos, jugadores, sudokus, ruta_salida="reporte_top10.html"):
+def reporte_top10(intentos, jugadores, sudokus, ruta_salida="top10_tiempos.html"):
     """Reporte 3: Top 10 mejores tiempos"""
     mejores = []
 
@@ -202,13 +202,12 @@ def reporte_top10(intentos, jugadores, sudokus, ruta_salida="reporte_top10.html"
     with open(ruta_salida, "w", encoding="utf-8") as archivo:
         archivo.write(html)
 
-    return archivo_reporte("reporte_top10.html")
+    return archivo_reporte("top10_tiempos.html")
 
 
-def generar_todos_los_reportes(sudokus, jugadores, intentos):
-    reporte_sudoku(sudokus, intentos, "reporte_sudokus.html")
-    generar_reporte_jugadores(jugadores, intentos, sudokus, "reporte_jugadores.html")
-    reporte_top10(intentos, jugadores, sudokus, "reporte_top10.html")
+def generar_reportes(sudokus, jugadores, intentos):
+    reporte_sudoku(sudokus, intentos, "resumen_sudoku.html")
+    reporte_top10(intentos, jugadores, sudokus, "top10_tiempos.html")
     return "Reportes generados con éxito."
 
 
@@ -286,7 +285,7 @@ def reporte_resumen_sudokus(sudokus, intentos):
         "Reporte 1: Resumen por Sudoku",
         columnas,
         filas,
-        "reporte_sudokus.html"
+        "resumen_sudoku.html"
     )
 
 
@@ -331,7 +330,7 @@ def reporte_rendimiento_jugadores(jugadores, intentos):
         "Reporte 2: Rendimiento por Jugador",
         columnas,
         filas,
-        "reporte_jugadores.html"
+        "rendimiento_jugador.html"
     )
 
 
@@ -380,11 +379,11 @@ def reporte_top_10_mejores_tiempos(intentos, jugadores, sudokus):
         "Reporte 3: Top 10 Mejores Tiempos",
         columnas,
         filas,
-        "reporte_top10.html"
+        "top10_tiempos.html"
     )
 
 
-def generar_todos_los_reportes(sudokus, jugadores, intentos):
+def generar_reportes(sudokus, jugadores, intentos):
     reporte_resumen_sudokus(sudokus, intentos)
     reporte_rendimiento_jugadores(jugadores, intentos)
     reporte_top_10_mejores_tiempos(intentos, jugadores, sudokus)

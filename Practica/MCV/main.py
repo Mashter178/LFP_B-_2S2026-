@@ -8,6 +8,7 @@ from reportes import (
     reporte_top10
 )
 from vista import Vista
+from reportes import REPORT_DIR
 
 
 def main():
@@ -15,6 +16,10 @@ def main():
     controlador = Controlador()
 
     base = Path(__file__).resolve().parent.parent / "test"
+
+    controlador.sudokus = controlador.cargar_sudokus(base / "sudokus.lfp")
+    controlador.usuarios = controlador.cargar_usuarios(base / "jugadores.lfp")
+    controlador.partidas = controlador.cargar_partidas(base / "intentos.lfp", controlador.sudokus)
 
     while True:
         vista.mostrar_menu()
@@ -41,7 +46,7 @@ def main():
         elif opcion == 3:
             try:
                 ruta = base / "intentos.lfp"
-                controlador.partidas = controlador.cargar_partidas(ruta)
+                controlador.partidas = controlador.cargar_partidas(ruta, controlador.sudokus)
                 vista.mostrar_resultado("Intentos cargados correctamente.")
             except Exception as e:
                 vista.mostrar_resultado(f"Error cargando intentos: {e}")
@@ -56,24 +61,22 @@ def main():
 
         elif opcion == 5:
             try:
-                reporte_sudoku(controlador.sudokus, controlador.partidas, "reporte_sudokus.html")
-                vista.mostrar_resultado("Reporte generado: reporte_sudokus.html")
+                archivo = str(REPORT_DIR / "resumen_sudoku.html")
+                reporte_sudoku(controlador.sudokus, controlador.partidas, archivo)
+                vista.mostrar_resultado("Reporte generado: resumen_sudoku.html")
             except Exception as e:
                 vista.mostrar_resultado(f"Error generando reporte: {e}")
                 vista.pausar()
 
         elif opcion == 6:
             try:
-                reporte_jugador(controlador.usuarios, controlador.partidas, controlador.sudokus, "reporte_jugadores.html")
-                vista.mostrar_resultado("Reporte generado: reporte_jugadores.html")
-            except Exception as e:
-                vista.mostrar_resultado(f"Error generando reporte: {e}")
-                vista.pausar()
+                archivo2 = str(REPORT_DIR / "rendimiento_jugador.html")
+                reporte_jugador(controlador.usuarios, controlador.partidas, controlador.sudokus, archivo2)
 
-        elif opcion == 7:
-            try:
-                reporte_top10(controlador.partidas, controlador.usuarios, controlador.sudokus, "reporte_top10.html")
-                vista.mostrar_resultado("Reporte generado: reporte_top10.html")
+                archivo3 = str(REPORT_DIR / "top10_tiempos.html")
+                reporte_top10(controlador.partidas, controlador.usuarios, controlador.sudokus, archivo3)
+
+                vista.mostrar_resultado("Reportes generados: rendimiento_jugador.html, top10_tiempos.html")
             except Exception as e:
                 vista.mostrar_resultado(f"Error generando reporte: {e}")
                 vista.pausar()

@@ -45,9 +45,7 @@ class Controlador:
             )
 
             if sudokus is not None:
-                sudoku = next(
-                    (s for s in sudokus if s.id_sudoku == partida.id_sudoku), None
-                )
+                sudoku = next((s for s in sudokus if s.id_sudoku == partida.id_sudoku), None)
                 if sudoku:
                     resultado = calificar_intento(sudoku.tablero, partida.solucion)
                     partida.porcentaje_validez = resultado["porcentaje_validez"]
@@ -56,3 +54,23 @@ class Controlador:
             partidas.append(partida)
 
         return partidas
+
+    def _leer_registros_multilinea(self, ruta, campos_esperados):
+        registros = []
+        buffer = ""
+
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                linea = linea.strip()
+                if not linea:
+                    continue
+
+                buffer += linea
+
+                if buffer.count(",") >= campos_esperados - 1:
+                    partes = [p.strip() for p in buffer.split(",")]
+                    if len(partes) == campos_esperados:
+                        registros.append(partes)
+                        buffer = ""
+
+        return registros
