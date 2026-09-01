@@ -30,7 +30,7 @@ class Vista:
 
     def mostrar_resultado(self, mensaje):
         print(mensaje)
-
+    
     def leer_texto(self, texto):
         return input(texto)
 

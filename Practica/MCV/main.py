@@ -16,7 +16,7 @@ def main():
     controlador = Controlador()
 
     base = Path(__file__).resolve().parent.parent / "test"
-
+    
     controlador.sudokus = controlador.cargar_sudokus(base / "sudokus.lfp")
     controlador.usuarios = controlador.cargar_usuarios(base / "jugadores.lfp")
     controlador.partidas = controlador.cargar_partidas(base / "intentos.lfp", controlador.sudokus)
@@ -39,6 +39,7 @@ def main():
                 ruta = base / "sudokus.lfp"
                 controlador.sudokus = controlador.cargar_sudokus(ruta)
                 vista.mostrar_resultado("Sudokus cargados correctamente.")
+                vista.mostrar_resultado(f"Cantidad de sudokus con dificultad 'medio': {controlador.AAA}")
             except Exception as e:
                 vista.mostrar_resultado(f"Error cargando sudokus: {e}")
             vista.pausar()

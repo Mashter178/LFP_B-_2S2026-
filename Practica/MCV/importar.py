@@ -8,15 +8,19 @@ class Controlador:
         self.sudokus = []
         self.usuarios = []
         self.partidas = []
+        self.AAA = 0
 
     def cargar_sudokus(self, ruta):
         sudokus = []
+        AAA = 0
         with open(ruta, "r", encoding="utf-8") as archivo:
             for linea in archivo:
                 linea = linea.strip()
                 if not linea:
                     continue
                 id_sudoku, dificultad, tablero = [x.strip() for x in linea.split(",")]
+                if dificultad == "Media":
+                    self.AAA += 1
                 sudokus.append(Sudoku(id_sudoku, dificultad, tablero))
         return sudokus
 
