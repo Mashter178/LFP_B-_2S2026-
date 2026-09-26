@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+\usepackage[margin=2cm]{geometry}
+
+\title{Jerarquia de HorarioScript}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tikzpicture}[
+    bloque/.style={draw, rounded corners, minimum width=3.2cm, minimum height=0.9cm, align=center, fill=blue!12},
+    dato/.style={draw, minimum width=3cm, minimum height=0.75cm, align=center, fill=green!12},
+    relacion/.style={-{Latex}, thick},
+    node distance=1.1cm and 1.5cm
+]
+    \node[bloque] (horario) {HORARIO};
+
+    \node[bloque, below left=of horario] (cursos) {CURSOS};
+    \node[bloque, below=of horario] (docentes) {CATEDRATICOS};
+    \node[bloque, below right=of horario] (aulas) {AULAS};
+    \node[bloque, right=of horario] (clases) {CLASES};
+
+    \node[dato, below=of cursos] (curso) {Curso\\LFP-0796};
+    \node[dato, below=of docentes] (docente) {Catedratico\\DOC-001};
+    \node[dato, below=of aulas] (aula) {Aula\\A-101};
+    \node[dato, below=of clases] (clase) {Clase\\LUNES 07:00--08:40};
+
+    \draw[relacion] (horario) -- (cursos);
+    \draw[relacion] (horario) -- (docentes);
+    \draw[relacion] (horario) -- (aulas);
+    \draw[relacion] (horario) -- (clases);
+    \draw[relacion] (cursos) -- (curso);
+    \draw[relacion] (docentes) -- (docente);
+    \draw[relacion] (aulas) -- (aula);
+    \draw[relacion] (clases) -- (clase);
+
+    \draw[relacion, dashed] (clase) to[bend left=25] node[above] {usa} (curso);
+    \draw[relacion, dashed] (clase) to[bend left=12] node[above] {con} (docente);
+    \draw[relacion, dashed] (clase) to[bend right=20] node[below] {en} (aula);
+\end{tikzpicture}
+\end{center}
+
+\end{document}

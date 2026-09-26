@@ -1,0 +1,27 @@
+digraph HorarioScript {
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Arial"];
+
+    Horario [label="HORARIO", fillcolor="#dceaf2"];
+    Cursos [label="CURSOS", fillcolor="#e5f3e1"];
+    Catedraticos [label="CATEDRATICOS", fillcolor="#fff1cc"];
+    Aulas [label="AULAS", fillcolor="#f8dfdf"];
+    Clases [label="CLASES", fillcolor="#e7ddf5"];
+
+    Curso [label="Curso\\nLFP-0796"];
+    Docente [label="Catedratico\\nDOC-001"];
+    Aula [label="Aula\\nA-101"];
+    Clase [label="Clase\\nLUNES 07:00-08:40"];
+
+    Horario -> Cursos;
+    Horario -> Catedraticos;
+    Horario -> Aulas;
+    Horario -> Clases;
+    Cursos -> Curso;
+    Catedraticos -> Docente;
+    Aulas -> Aula;
+    Clases -> Clase;
+    Clase -> Curso [label="usa"];
+    Clase -> Docente [label="con"];
+    Clase -> Aula [label="en"];
+}
