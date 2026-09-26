@@ -7,18 +7,22 @@ from reportes import GeneradorReportes
 
 
 class VentanaHorario(tk.Tk):
-    DIRECTORIO_PRUEBAS = Path(__file__).resolve().parent.parent / "test"
+    Directorio = Path(__file__).resolve().parent.parent / "test"
 
-    def __init__(self):
+    def __init__(self, ruta_archivo=None):
         super().__init__()
         self.title("HorarioScript")
         self.geometry("1060x680")
         self.minsize(820, 520)
 
         self.aplicacion = Aplicacion()
-        self.ruta_seleccionada = None
+        self.ruta_seleccionada = Path(ruta_archivo) if ruta_archivo else None
         self.estado = tk.StringVar(value="Seleccione un archivo .hor para comenzar.")
-        self.archivo = tk.StringVar(value="Ningún archivo seleccionado")
+        self.archivo = tk.StringVar(
+            value=str(self.ruta_seleccionada)
+            if self.ruta_seleccionada
+            else "Ningún archivo seleccionado"
+        )
         self.tablas = {}
         self.salida_resumen = None
 
@@ -56,14 +60,9 @@ class VentanaHorario(tk.Tk):
         ).grid(row=0, column=3, padx=(8, 0))
         ttk.Button(
             barra,
-            text="Usar ejemplo",
-            command=self.cargar_ejemplo,
-        ).grid(row=0, column=4, padx=(8, 0))
-        ttk.Button(
-            barra,
             text="Generar HTML",
             command=self.generar_html,
-        ).grid(row=0, column=5, padx=(8, 0))
+        ).grid(row=0, column=4, padx=(8, 0))
 
         ttk.Label(contenedor, textvariable=self.estado).grid(
             row=2, column=0, sticky="w", pady=(0, 8)
@@ -114,7 +113,7 @@ class VentanaHorario(tk.Tk):
     def seleccionar_archivo(self):
         ruta = filedialog.askopenfilename(
             title="Seleccionar archivo HorarioScript",
-            initialdir=str(self.DIRECTORIO_PRUEBAS),
+            initialdir=str(self.Directorio),
             filetypes=[("Archivos HorarioScript", "*.hor"), ("Todos", "*.*")],
         )
         if ruta:
@@ -122,13 +121,15 @@ class VentanaHorario(tk.Tk):
             self.archivo.set(str(self.ruta_seleccionada))
             self.estado.set("Archivo seleccionado. Presione Analizar.")
 
-    def cargar_ejemplo(self):
-        self.ruta_seleccionada = self.aplicacion.ruta_predeterminada()
-        self.archivo.set(str(self.ruta_seleccionada))
-        self.analizar_archivo()
-
     def analizar_archivo(self):
-        ruta = self.ruta_seleccionada or self.aplicacion.ruta_predeterminada()
+        if not self.ruta_seleccionada:
+            messagebox.showwarning(
+                "Archivo requerido",
+                "Seleccione un archivo .hor antes de analizar.",
+            )
+            return
+
+        ruta = self.ruta_seleccionada
         try:
             self.aplicacion = Aplicacion(ruta)
             self.aplicacion.ejecutar()

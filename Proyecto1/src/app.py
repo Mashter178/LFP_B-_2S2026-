@@ -90,14 +90,26 @@ class Aplicacion:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Ejecuta el análisis completo de un archivo HorarioScript."
+        description="Ejecuta HorarioScript mediante la interfaz o la consola."
     )
     parser.add_argument(
         "archivo",
         nargs="?",
-        help="Ruta del archivo .hor. Por defecto se usa test/prueba.hor.",
+        help="Ruta opcional del archivo .hor.",
+    )
+    parser.add_argument(
+        "--consola",
+        action="store_true",
+        help="Ejecuta el análisis sin abrir Tkinter.",
     )
     argumentos = parser.parse_args()
+
+    if not argumentos.consola:
+        from vista import VentanaHorario
+
+        ventana = VentanaHorario(argumentos.archivo)
+        ventana.mainloop()
+        return 0
 
     aplicacion = Aplicacion(argumentos.archivo)
     try:
