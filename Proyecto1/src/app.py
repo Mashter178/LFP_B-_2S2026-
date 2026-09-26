@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 
 from Lexer import AnalizadorLexico
+from controlador import ControladorHorario
 from semantic import AnalizadorSemantico
 from sintatic import ErrorSintactico, Parser
 
@@ -15,6 +16,8 @@ class Aplicacion:
         self.errores_lexicos = []
         self.error_sintactico = None
         self.errores_semanticos = []
+        self.controlador = None
+        self.datos_reportes = None
 
     def ejecutar(self, ruta_archivo=None):
         ruta = Path(ruta_archivo or self.ruta_archivo or self.ruta_predeterminada())
@@ -36,6 +39,8 @@ class Aplicacion:
 
         analizador_semantico = AnalizadorSemantico(self.horario)
         self.errores_semanticos = analizador_semantico.analizar()
+        self.controlador = ControladorHorario(self.horario)
+        self.datos_reportes = self.controlador.datos_para_reportes()
         return self.resultado()
 
     def resultado(self):
@@ -46,6 +51,7 @@ class Aplicacion:
             "errores_lexicos": self.errores_lexicos,
             "error_sintactico": self.error_sintactico,
             "errores_semanticos": self.errores_semanticos,
+            "datos_reportes": self.datos_reportes,
         }
 
     def esta_correcto(self):

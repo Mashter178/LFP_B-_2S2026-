@@ -1,0 +1,21 @@
+## Horario con Errores Lexicos - Prueba de Recuperacion en Modo Panico
+HORARIO {
+    CURSOS {
+        curso: "Compiladores 1" [codigo: "CMP-0601, creditos: 4],
+        curso: "Inteligencia Artificial" [codigo: "IA-0450", creditos: 4],
+        curso: "Etica Profesional" [codigo: "ETP-0210", creditos: 2],
+    };
+    CATEDRATICOS {
+        catedratico: "Julia Marroquin" [codigo: "DOC004", categoria: TITULAR],
+        catedratico: "Hector Ixchop" [codigo: "DOC-005", categoria: AUXILIAR],
+    };
+    AULAS {
+        aula: "C-301" [capacidad: 30@, edificio: "T-2"],
+        aula: "LAB-5" [capacidad: 20, edificio: "T-4"],
+    };
+    CLASES {
+        clase: "CMP-0601" con "DOC-005" en "C-301" [dia: LUNES, inicio: 07:00, fin: 08:40, seccion: "A"],
+        clase: "IA-0450" con "DOC-005" en "LAB-5" [dia: DOMINGO, inicio: 09:00, fin: 10:40, seccion: "A"],
+        clase: "ETP-0210" con "DOC-005" en "C-301" [dia: MARTES, inicio: 22:15, fin: 23:00, seccion: "B"],
+    };
+};
