@@ -50,7 +50,7 @@ class ErrorLexico:
 
 class AnalizadorLexico:
     DIAS = {
-        "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO",
+        "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO",
     }
     CATEGORIAS = {"TITULAR", "INTERINO", "AUXILIAR"}
 
@@ -59,7 +59,7 @@ class AnalizadorLexico:
         "AULAS", "aula", "CLASES", "clase", "con", "en", "codigo",
         "creditos", "categoria", "capacidad", "edificio", "dia", "inicio",
         "fin", "seccion", "LUNES", "MARTES", "MIERCOLES", "JUEVES",
-        "VIERNES", "SABADO", "TITULAR", "INTERINO", "AUXILIAR",
+        "VIERNES", "SABADO", "DOMINGO", "TITULAR", "INTERINO", "AUXILIAR",
     }
 
     SIMBOLOS = {

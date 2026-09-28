@@ -19,6 +19,7 @@ class AnalizadorSemantico:
 		"JUEVES",
 		"VIERNES",
 		"SABADO",
+		"DOMINGO",
 	}
 
 	CATEGORIAS_VALIDAS = {"TITULAR", "INTERINO", "AUXILIAR"}
