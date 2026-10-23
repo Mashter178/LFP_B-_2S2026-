@@ -30,17 +30,17 @@ class Parser:
 		return self.tokens[self.posicion]
 
 	def mirar(self, tipo):
-		return self.actual().tipo == tipo
+		return self.actual.tipo == tipo
 
 	def avanzar(self):
-		token = self.actual()
+		token = self.actual
 		if token.tipo != "EOF":
 			self.posicion += 1
 		return token
 
 	def esperar(self, tipo):
 		if not self.mirar(tipo):
-			token = self.actual()
+			token = self.actual
 			raise ErrorSintactico(
 				f"Línea {token.linea}, columna {token.columna}: "
 				f"se esperaba {tipo}, se encontró {token.tipo} "
@@ -158,7 +158,7 @@ class Parser:
 
 	def contenido_bloque(self):
 		contenido = []
-		while self.actual().tipo not in self.BLOQUES:
+		while self.actual.tipo not in self.BLOQUES:
 			contenido.append(self.elemento_inline())
 		return contenido
 
@@ -182,7 +182,7 @@ class Parser:
 		apertura = self.esperar(tipo_apertura)
 		contenido = []
 		while not self.mirar(tipo_cierre):
-			if self.mirar("EOF") or self.actual().tipo in self.BLOQUES:
+			if self.mirar("EOF") or self.actual.tipo in self.BLOQUES:
 				raise ErrorSintactico(
 					f"Línea {apertura.linea}, columna {apertura.columna}: "
 					f"falta el cierre {tipo_cierre}"
