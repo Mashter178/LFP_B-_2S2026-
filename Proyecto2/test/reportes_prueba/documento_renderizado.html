@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>p1_01_documento_valido</title>
+</head>
+<body>
+<h1 id="encabezado-1"> Guía de estudio: Lenguajes Formales y de Programación</h1>
+<p>Este documento resume los temas principales del curso con <strong>definiciones claras</strong>, <em>ejemplos breves</em> y fragmentos de <code>código</code>.</p>
+<h2 id="encabezado-2"> Introducción</h2>
+<p>Los lenguajes formales permiten describir con <strong>precisión matemática</strong> qué cadenas pertenecen a un lenguaje.</p>
+<p>Un compilador transforma un programa fuente en otro lenguaje y <em>verifica</em> que cumpla las reglas del lenguaje de origen.</p>
+<p>El curso se divide en tres bloques: análisis léxico, análisis sintáctico y construcción de herramientas en <code>Python</code>.</p>
+<h2 id="encabezado-3"> Análisis léxico</h2>
+<h3 id="encabezado-4"> Tokens y lexemas</h3>
+<p>Un <strong>token</strong> es una categoría como identificador o número, y un <em>lexema</em> es la secuencia concreta de caracteres reconocida.</p>
+<p>La función <code>siguiente_token()</code> entrega un token cada vez que el analizador sintáctico lo solicita.</p>
+<h4 id="encabezado-5"> Patrones</h4>
+<p>Un patrón describe todos los lexemas posibles de un token, normalmente mediante una expresión regular.</p>
+<h5 id="encabezado-6"> Ejemplos de patrones</h5>
+<p>El patrón de un identificador es una letra seguida de letras o dígitos.</p>
+<h6 id="encabezado-7"> Nota final del bloque</h6>
+<p>Los patrones se implementan con un autómata finito determinista.</p>
+<h3 id="encabezado-8"> Autómatas finitos</h3>
+<ul>
+<li> Autómata finito determinista
+<ul>
+<li> Una transición por símbolo</li>
+<li> Sin transiciones vacías</li>
+</ul></li>
+<li> Autómata finito no determinista
+<ul>
+<li> Varias transiciones por símbolo</li>
+<li> Con transiciones vacías
+<ul>
+<li> Se eliminan al convertir a determinista</li>
+<li> Método del árbol</li>
+</ul></li>
+<li> Minimización de estados</li>
+</ul></li>
+</ul>
+<h3 id="encabezado-9"> Errores léxicos</h3>
+<p>Un error léxico ocurre cuando una secuencia de caracteres no coincide con ningún patrón del lenguaje.</p>
+<ul>
+<li> Carácter desconocido</li>
+<li> Número mal formado</li>
+<li> Cadena sin cerrar</li>
+</ul>
+<hr>
+<h2 id="encabezado-10"> Análisis sintáctico</h2>
+<h3 id="encabezado-11"> Gramáticas libres de contexto</h3>
+<p>Una gramática libre de contexto tiene <strong>cuatro componentes</strong>: terminales, no terminales, producciones y símbolo inicial.</p>
+<ul>
+<li> Terminales</li>
+<li> No terminales</li>
+<li> Producciones
+<ul>
+<li> Lado izquierdo con un solo no terminal</li>
+<li> Lado derecho con una secuencia de símbolos</li>
+</ul></li>
+<li> Símbolo inicial</li>
+</ul>
+<h3 id="encabezado-12"> Árboles de derivación</h3>
+<p>El árbol de derivación muestra cómo se aplican las producciones para reconocer una cadena.</p>
+<ul>
+<li> Raíz
+<ul>
+<li> Símbolo inicial</li>
+</ul></li>
+<li> Nodos internos
+<ul>
+<li> No terminales
+<ul>
+<li> Cada nodo representa una producción</li>
+<li> Los hijos son los símbolos del lado derecho</li>
+</ul></li>
+<li> Hojas
+<ul>
+<li> Terminales</li>
+<li> Tokens reconocidos</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="encabezado-13"> Recursividad</h3>
+<p>Una producción es <strong>recursiva</strong> cuando el no terminal aparece en su propio lado derecho.</p>
+<p>La recursividad por la izquierda es un problema para el análisis descendente, y se resuelve con la función <code>eliminar_recursion()</code>.</p>
+<ul>
+<li> Recursividad por la izquierda</li>
+<li> Recursividad por la derecha</li>
+<li> Recursividad central</li>
+</ul>
+<hr>
+<h2 id="encabezado-14"> Citas importantes</h2>
+<blockquote> El análisis sintáctico es donde la teoría se encuentra con la práctica.</blockquote>
+<blockquote> Y es donde más se aprende, según los estudiantes.</blockquote>
+<p>Otra cita de un solo nivel con formato:</p>
+<blockquote> Un <strong>buen diseño</strong> de la gramática evita <em>muchos problemas</em> posteriores.</blockquote>
+<h2 id="encabezado-15"> Ejemplos de código</h2>
+<p>Un autómata sencillo se puede representar con un diccionario de transiciones.</p>
+<pre><code>python
+transiciones = {
+    (&quot;q0&quot;, &quot;a&quot;): &quot;q1&quot;,
+    (&quot;q1&quot;, &quot;b&quot;): &quot;q0&quot;,
+}
+
+def siguiente(estado, simbolo):
+    return transiciones.get((estado, simbolo))
+</code></pre>
+<p>Un fragmento sin lenguaje indicado:</p>
+<pre><code>
+entrada: aabb
+salida: aceptada
+</code></pre>
+<p>Y una última función con <code>return</code> explícito.</p>
+<pre><code>java
+public boolean acepta(String cadena) {
+    return cadena.length() % 2 == 0;
+}
+</code></pre>
+<hr>
+<h2 id="encabezado-16"> Resumen del curso</h2>
+<p>Los <strong>tres pasos</strong> del procesamiento de un lenguaje son el análisis léxico, el análisis sintáctico y la generación del resultado.</p>
+<p>Repase los temas con <em>calma</em> y practique con ejemplos propios.</p>
+<ul>
+<li> Revisar los apuntes</li>
+<li> Resolver los ejercicios
+<ul>
+<li> Autómatas</li>
+<li> Gramáticas</li>
+</ul></li>
+<li> Preparar el proyecto</li>
+</ul>
+<p>Fin del documento.</p>
+</body>
+</html>

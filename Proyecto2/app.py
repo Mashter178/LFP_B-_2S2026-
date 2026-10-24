@@ -36,7 +36,7 @@ def ejecutar_consola(ruta, salida_html=None):
     resultado = controlador.analizar_archivo(ruta)
     imprimir_resultado(resultado)
 
-    if salida_html and controlador.arbol is not None and controlador.esta_correcto():
+    if salida_html and controlador.lexer is not None:
         controlador.guardar_html(salida_html, Path(ruta).stem)
         print(f"\nHTML generado: {salida_html}")
 

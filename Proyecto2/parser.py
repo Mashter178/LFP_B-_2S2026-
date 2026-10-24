@@ -60,7 +60,8 @@ class Parser:
 				self.avanzar()
 				continue
 			if self.mirar("DEDENT"):
-				break
+				self.avanzar()
+				continue
 			hijos.append(self.bloque())
 		return {"tipo": "DOCUMENTO", "hijos": hijos}
 

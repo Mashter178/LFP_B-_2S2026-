@@ -133,24 +133,26 @@ class VentanaMarkdown(tk.Tk):
         self.salida.configure(state="disabled")
 
     def generar_html(self):
-        if self.controlador.arbol is None:
+        if self.controlador.lexer is None:
             messagebox.showwarning("Análisis requerido", "Analice un archivo antes de generar HTML.")
             return
 
-        ruta = filedialog.asksaveasfilename(
-            title="Guardar HTML",
-            defaultextension=".html",
-            filetypes=[("HTML", "*.html")],
+        directorio = filedialog.askdirectory(
+            title="Seleccionar carpeta para los reportes HTML",
         )
-        if not ruta:
+        if not directorio:
             return
 
         try:
-            self.controlador.guardar_html(ruta, self.ruta.stem if self.ruta else "Documento Markdown")
+            rutas = self.controlador.guardar_reportes(
+                directorio,
+                self.ruta.stem if self.ruta else "Documento Markdown",
+            )
         except OSError as error:
-            messagebox.showerror("No se pudo guardar el HTML", str(error))
+            messagebox.showerror("No se pudieron guardar los reportes", str(error))
             return
-        messagebox.showinfo("HTML generado", f"Archivo guardado en:\n{ruta}")
+        archivos = "\n".join(str(ruta) for ruta in rutas.values())
+        messagebox.showinfo("Reportes generados", f"Archivos guardados en:\n{archivos}")
 
 
 if __name__ == "__main__":
